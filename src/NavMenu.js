@@ -48,6 +48,9 @@ const NavMenu = ({
                 <Nav.Link onClick={() => handleNav("employees")}>
                   Employees
                 </Nav.Link>
+                <Nav.Link onClick={() => handleNav("recurrings")}>
+                  Recurrings
+                </Nav.Link>
               </Nav>
               <Navbar.Text>
                 Signed in as: <a>{me}</a>
