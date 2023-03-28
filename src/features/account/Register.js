@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { tryLogin } from "./accountSlice";
 import { navigate } from "../ui_routes/uiSlice";
 
-const Login = ({ _useDispatch = useDispatch, _useSelector = useSelector }) => {
+const Register = ({
+  _useDispatch = useDispatch,
+  _useSelector = useSelector,
+}) => {
   const dispatch = _useDispatch();
   const message = _useSelector((state) => state.account.message);
   const isLoggedIn = _useSelector((state) => state.account.isLoggedIn);
@@ -15,7 +18,7 @@ const Login = ({ _useDispatch = useDispatch, _useSelector = useSelector }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      tryLogin({ username: username, password: password, path: "login" })
+      tryLogin({ username: username, password: password, path: "register" })
     );
   };
 
@@ -27,7 +30,7 @@ const Login = ({ _useDispatch = useDispatch, _useSelector = useSelector }) => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>Username</Form.Label>
         <Form.Control
@@ -52,4 +55,4 @@ const Login = ({ _useDispatch = useDispatch, _useSelector = useSelector }) => {
   );
 };
 
-export default Login;
+export default Register;

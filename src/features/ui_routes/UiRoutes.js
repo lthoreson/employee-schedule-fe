@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import Login from "../account/Login";
+import Register from "../account/Register";
 import ErrorPage from "./ErrorPage";
 
 const UiRoutes = ({ _useSelector = useSelector }) => {
@@ -13,7 +14,9 @@ const UiRoutes = ({ _useSelector = useSelector }) => {
     case "":
       switchPage = null;
       break;
-
+    case "register":
+      switchPage = <Register />;
+      break;
     default:
       switchPage = <ErrorPage />;
       break;

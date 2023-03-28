@@ -15,15 +15,18 @@ export const tryLoginThunkFunc = async (credentials = {}, api) => {
 
   // get new token if credentials provided
   if (credentials.username && credentials.password) {
-    const authResponse = await _fetch(`http://localhost:8080/account/login`, {
-      method: "POST",
-      body: JSON.stringify(credentials), // username & password
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const authResponse = await _fetch(
+      `http://localhost:8080/account/${credentials.path}`,
+      {
+        method: "POST",
+        body: JSON.stringify(credentials), // username & password
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     token = await authResponse.json();
-
+    // check for errors in response before moving on
     if (token.error) {
       return token;
     }

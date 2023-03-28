@@ -12,17 +12,13 @@ const NavMenu = ({
   const isLoggedIn = _useSelector((state) => state.account.isLoggedIn);
   const dispatch = _useDispatch();
 
-  const handleLogin = () => {
-    dispatch(navigate("login"));
+  const handleNav = (destination) => {
+    dispatch(navigate(destination));
   };
 
   const handleLogOut = () => {
     dispatch(logOut());
     localStorage.removeItem("shiftToken");
-    dispatch(navigate(""));
-  };
-
-  const handleHome = () => {
     dispatch(navigate(""));
   };
 
@@ -33,19 +29,25 @@ const NavMenu = ({
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand onClick={handleHome}>Shyft</Navbar.Brand>
+        <Navbar.Brand onClick={() => handleNav("")}>Shyft</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse className="justify-content-end">
           {!isLoggedIn && (
             <Nav className="me-auto">
-              <Nav.Link onClick={handleLogin}>Login</Nav.Link>
-              <Nav.Link>Register</Nav.Link>
+              <Nav.Link onClick={() => handleNav("login")}>Login</Nav.Link>
+              <Nav.Link onClick={() => handleNav("register")}>
+                Register
+              </Nav.Link>
             </Nav>
           )}
           {isLoggedIn && (
             <>
               <Nav className="me-auto">
-                <Nav.Link onClick={handleHome}>Home</Nav.Link>
+                <Nav.Link onClick={() => handleNav("")}>Home</Nav.Link>
+                <Nav.Link onClick={() => handleNav("shifts")}>Shifts</Nav.Link>
+                <Nav.Link onClick={() => handleNav("employees")}>
+                  Employees
+                </Nav.Link>
               </Nav>
               <Navbar.Text>
                 Signed in as: <a>{me}</a>
