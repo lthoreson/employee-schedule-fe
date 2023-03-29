@@ -1,8 +1,9 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
+import ShiftButton from "./ShiftButton";
 
-const ShiftsTable = ({ shifts }) => {
-  const renderedShifts = shifts.map((employee) => {
+const ShiftsTable = ({ shifts, surrenderShift, claimShift }) => {
+  const renderedRows = shifts.map((employee) => {
     const weekdays = [null, null, null, null, null, null, null];
     employee.forEach((shift) => {
       weekdays[new Date(shift.date).getUTCDay()] = shift;
@@ -15,13 +16,17 @@ const ShiftsTable = ({ shifts }) => {
         <td>
           {safeProfile.firstName} {safeProfile.lastName}
         </td>
-        <td>{weekdays[0]?.date}</td>
-        <td>{weekdays[1]?.date}</td>
-        <td>{weekdays[2]?.date}</td>
-        <td>{weekdays[3]?.date}</td>
-        <td>{weekdays[4]?.date}</td>
-        <td>{weekdays[5]?.date}</td>
-        <td>{weekdays[6]?.date}</td>
+        {weekdays.map((w, i) => (
+          <td key={i}>
+            {w && (
+              <ShiftButton
+                shift={w}
+                surrenderShift={surrenderShift}
+                claimShift={claimShift}
+              />
+            )}
+          </td>
+        ))}
       </tr>
     );
   });
@@ -39,7 +44,7 @@ const ShiftsTable = ({ shifts }) => {
           <th>Saturday</th>
         </tr>
       </thead>
-      <tbody>{renderedShifts}</tbody>
+      <tbody>{renderedRows}</tbody>
     </Table>
   );
 };

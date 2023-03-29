@@ -15,10 +15,8 @@ const Shifts = ({
   const [endTime, setEndTime] = useState(0);
   const [profile, setProfile] = useState(null);
   const [shifts, setShifts] = useState([]);
-  const token = localStorage.getItem("shiftToken");
 
   const employees = _useSelector((state) => state.employees.employees);
-  const isLoading = _useSelector((state) => state.employees.isLoading);
   const dispatch = _useDispatch();
 
   useEffect(() => {
@@ -45,6 +43,7 @@ const Shifts = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("shiftToken");
     const newShift = await _fetch("http://localhost:8080/shift", {
       method: "POST",
       body: JSON.stringify({
@@ -58,7 +57,31 @@ const Shifts = ({
         Authorization: token,
       },
     });
-    const newShiftJson = await newShift.json();
+    fetchShifts();
+  };
+
+  const surrenderShift = async (shift) => {
+    const token = localStorage.getItem("shiftToken");
+    const newShift = await _fetch("http://localhost:8080/shift/surrender", {
+      method: "PUT",
+      body: JSON.stringify(shift),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
+    fetchShifts();
+  };
+  const claimShift = async (shift) => {
+    const token = localStorage.getItem("shiftToken");
+    const newShift = await _fetch("http://localhost:8080/shift/claim", {
+      method: "PUT",
+      body: JSON.stringify(shift),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token,
+      },
+    });
     fetchShifts();
   };
 
@@ -108,7 +131,11 @@ const Shifts = ({
         </Accordion.Item>
       </Accordion>
 
-      <ShiftsTable shifts={shifts} />
+      <ShiftsTable
+        shifts={shifts}
+        surrenderShift={surrenderShift}
+        claimShift={claimShift}
+      />
     </>
   );
 };

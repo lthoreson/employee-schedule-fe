@@ -6,7 +6,7 @@ const Profile = () => {
   const [lastName, setLastName] = useState("");
   const token = localStorage.getItem("shiftToken");
 
-  const fetchShifts = async () => {
+  const fetchMyProfile = async () => {
     const profileResponse = await fetch("http://localhost:8080/account", {
       method: "GET",
       headers: {
@@ -20,7 +20,7 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    fetchShifts();
+    fetchMyProfile();
   }, []);
 
   const handleSubmit = async (e) => {
