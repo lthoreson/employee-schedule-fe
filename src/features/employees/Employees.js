@@ -21,8 +21,8 @@ const Employees = ({
         <Card.Title>
           {e.firstName} {e.lastName}
         </Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">ToDos</Card.Subtitle>
-        <Card.Text>Time off, Give Up Shift</Card.Text>
+        <Card.Subtitle className="mb-2 text-muted">Details</Card.Subtitle>
+        <Card.Text>Time off pending</Card.Text>
         <Card.Link href="#">Card Link</Card.Link>
         <Card.Link href="#">Another Link</Card.Link>
       </Card.Body>
