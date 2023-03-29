@@ -4,16 +4,18 @@ import Login from "../account/Login";
 import Profile from "../account/Profile";
 import Register from "../account/Register";
 import Employees from "../employees/Employees";
+import Recurrings from "../recurring/Recurrings";
 import Shifts from "../shifts/Shifts";
 import TimeOff from "../timeOff/TimeOff";
 import ErrorPage from "./ErrorPage";
+import HomePage from "./HomePage";
 
 const UiRoutes = ({ _useSelector = useSelector }) => {
   const currentPage = _useSelector((state) => state.ui.currentPage);
   let switchPage = null;
   switch (currentPage) {
     case "":
-      switchPage = null;
+      switchPage = <HomePage />;
       break;
     case "employees":
       switchPage = <Employees />;
@@ -23,6 +25,9 @@ const UiRoutes = ({ _useSelector = useSelector }) => {
       break;
     case "profile":
       switchPage = <Profile />;
+      break;
+    case "recurrings":
+      switchPage = <Recurrings />;
       break;
     case "register":
       switchPage = <Register />;
