@@ -50,7 +50,7 @@ const Shifts = ({
         startTime,
         endTime,
         date,
-        profile: { id: profile },
+        profile: profile === "Employee" ? null : { id: profile },
       }),
       headers: {
         "Content-Type": "application/json",

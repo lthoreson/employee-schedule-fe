@@ -51,6 +51,9 @@ const NavMenu = ({
                 <Nav.Link onClick={() => handleNav("recurrings")}>
                   Recurrings
                 </Nav.Link>
+                <Nav.Link onClick={() => handleNav("timeOff")}>
+                  TimeOff
+                </Nav.Link>
                 <Nav.Link onClick={() => handleNav("profile")}>
                   Profile
                 </Nav.Link>

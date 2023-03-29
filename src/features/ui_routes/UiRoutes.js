@@ -5,6 +5,7 @@ import Profile from "../account/Profile";
 import Register from "../account/Register";
 import Employees from "../employees/Employees";
 import Shifts from "../shifts/Shifts";
+import TimeOff from "../timeOff/TimeOff";
 import ErrorPage from "./ErrorPage";
 
 const UiRoutes = ({ _useSelector = useSelector }) => {
@@ -28,6 +29,9 @@ const UiRoutes = ({ _useSelector = useSelector }) => {
       break;
     case "shifts":
       switchPage = <Shifts />;
+      break;
+    case "timeOff":
+      switchPage = <TimeOff />;
       break;
     default:
       switchPage = <ErrorPage />;
