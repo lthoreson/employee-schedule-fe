@@ -66,6 +66,7 @@ const accountSlice = createSlice({
     builder
       .addCase(tryLogin.pending, (state) => {
         state.isLoading = true;
+        state.message = "";
       })
       .addCase(tryLogin.fulfilled, (state, action) => {
         state.isLoading = false;
