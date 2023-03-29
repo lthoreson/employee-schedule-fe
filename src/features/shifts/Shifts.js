@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Accordion, Button, Form, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfiles } from "../employees/employeeSlice";
+import ShiftsTable from "./ShiftsTable";
 
 const Shifts = ({
   _useDispatch = useDispatch,
@@ -41,28 +42,6 @@ const Shifts = ({
   useEffect(() => {
     fetchShifts();
   }, [date]);
-
-  const renderedShifts = shifts.map((employee) => {
-    const weekdays = [null, null, null, null, null, null, null];
-    employee.forEach((shift) => {
-      weekdays[new Date(shift.date).getUTCDay()] = shift;
-    });
-
-    return (
-      <tr key={employee[0]?.profile.id}>
-        <td>
-          {employee[0]?.profile.firstName} {employee[0]?.profile.lastName}
-        </td>
-        <td>{weekdays[0]?.date}</td>
-        <td>{weekdays[1]?.date}</td>
-        <td>{weekdays[2]?.date}</td>
-        <td>{weekdays[3]?.date}</td>
-        <td>{weekdays[4]?.date}</td>
-        <td>{weekdays[5]?.date}</td>
-        <td>{weekdays[6]?.date}</td>
-      </tr>
-    );
-  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -129,21 +108,7 @@ const Shifts = ({
         </Accordion.Item>
       </Accordion>
 
-      <Table striped bordered hover>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Sunday</th>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-          </tr>
-        </thead>
-        <tbody>{renderedShifts}</tbody>
-      </Table>
+      <ShiftsTable shifts={shifts} />
     </>
   );
 };
