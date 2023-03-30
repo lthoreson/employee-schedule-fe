@@ -173,7 +173,13 @@ const Shifts = ({
           </Button>{" "}
         </>
       )}
-
+      <Form.Group className="w-25">
+        <Form.Control
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.value)}
+        />
+      </Form.Group>
       <ShiftsTable
         shifts={shifts}
         surrenderShift={surrenderShift}
