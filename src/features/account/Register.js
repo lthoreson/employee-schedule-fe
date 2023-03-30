@@ -14,12 +14,12 @@ const Register = ({
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [admin, setAdmin] = useState(false);
+  console.log(admin);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      tryLogin({ username: username, password: password, path: "register" })
-    );
+    dispatch(tryLogin({ username, password, admin, path: "register" }));
   };
 
   useEffect(() => {
@@ -45,6 +45,13 @@ const Register = ({
           type="password"
           placeholder="Password"
           onChange={(e) => setPassword(e.target.value)}
+        />
+      </Form.Group>
+      <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <Form.Check
+          type="checkbox"
+          label="Admin"
+          onChange={(e) => setAdmin(e.target.checked)}
         />
       </Form.Group>
       <Button variant="primary" type="submit">

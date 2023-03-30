@@ -1,7 +1,10 @@
 import React from "react";
 import { Alert, Button, Card } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
-const TimeOffCard = ({ t, approveDeny }) => {
+const TimeOffCard = ({ t, approveDeny, _useSelector = useSelector }) => {
+  const isAdmin = _useSelector((state) => state.account.isAdmin);
+
   const handleClickYes = () => approveDeny(t, true);
   const handleClickNo = () => approveDeny(t, false);
   return (
@@ -22,10 +25,14 @@ const TimeOffCard = ({ t, approveDeny }) => {
           {new Date(t.startDate).toUTCString().split(" 00:")[0]} --{" "}
           {new Date(t.endDate).toUTCString().split(" 00:")[0]}
         </Card.Text>
-        {!t.approval && <Button onClick={handleClickYes}>Approve</Button>}
-        <Button variant="danger" onClick={handleClickNo}>
-          Deny
-        </Button>
+        {!t.approval && isAdmin && (
+          <Button onClick={handleClickYes}>Approve</Button>
+        )}
+        {isAdmin && (
+          <Button variant="danger" onClick={handleClickNo}>
+            Deny
+          </Button>
+        )}
       </Card.Body>
     </Card>
   );

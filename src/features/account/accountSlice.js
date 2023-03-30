@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   username: null,
+  isAdmin: false,
   isLoggedIn: false,
   isLoading: false,
   message: "",
@@ -19,7 +20,7 @@ export const tryLoginThunkFunc = async (credentials = {}, api) => {
       `http://localhost:8080/account/${credentials.path}`,
       {
         method: "POST",
-        body: JSON.stringify(credentials), // username & password
+        body: JSON.stringify(credentials), // username, password, admin
         headers: {
           "Content-Type": "application/json",
         },
@@ -72,6 +73,7 @@ const accountSlice = createSlice({
         state.isLoading = false;
         if (action.payload.username) {
           state.username = action.payload.username;
+          state.isAdmin = action.payload.admin;
           state.isLoggedIn = true;
         }
         if (action.payload.message) {

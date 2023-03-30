@@ -17,6 +17,7 @@ const Shifts = ({
   const [shifts, setShifts] = useState([]);
 
   const employees = _useSelector((state) => state.employees.employees);
+  const isAdmin = _useSelector((state) => state.account.isAdmin);
   const dispatch = _useDispatch();
 
   useEffect(() => {
@@ -119,55 +120,60 @@ const Shifts = ({
 
   return (
     <>
-      <Accordion>
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>Add New Shift</Accordion.Header>
-          <Accordion.Body>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formBasicDate">
-                <Form.Label>Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Select
-                aria-label="select employee"
-                onChange={(e) => setProfile(e.target.value)}
-              >
-                <option>Employee</option>
-                {renderedProfiles}
-              </Form.Select>
-              <Form.Group className="mb-3" controlId="formBasicNumber">
-                <Form.Label>Start Time</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="0"
-                  onChange={(e) => setStartTime(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicNumber">
-                <Form.Label>End Time</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="0"
-                  onChange={(e) => setEndTime(e.target.value)}
-                />
-              </Form.Group>
-              <Button variant="primary" type="submit">
-                Submit
-              </Button>
-            </Form>
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
-      <Button variant="primary" onClick={generateWeek}>
-        Generate
-      </Button>{" "}
-      <Button variant="secondary" onClick={assignAllWeek}>
-        Assign
-      </Button>{" "}
+      {isAdmin && (
+        <>
+          <Accordion>
+            <Accordion.Item eventKey="0">
+              <Accordion.Header>Add New Shift</Accordion.Header>
+              <Accordion.Body>
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3" controlId="formBasicDate">
+                    <Form.Label>Date</Form.Label>
+                    <Form.Control
+                      type="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Select
+                    aria-label="select employee"
+                    onChange={(e) => setProfile(e.target.value)}
+                  >
+                    <option>Employee</option>
+                    {renderedProfiles}
+                  </Form.Select>
+                  <Form.Group className="mb-3" controlId="formBasicNumber">
+                    <Form.Label>Start Time</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="0"
+                      onChange={(e) => setStartTime(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="formBasicNumber">
+                    <Form.Label>End Time</Form.Label>
+                    <Form.Control
+                      type="number"
+                      placeholder="0"
+                      onChange={(e) => setEndTime(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>
+                </Form>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+          <Button variant="primary" onClick={generateWeek}>
+            Generate
+          </Button>{" "}
+          <Button variant="secondary" onClick={assignAllWeek}>
+            Assign
+          </Button>{" "}
+        </>
+      )}
+
       <ShiftsTable
         shifts={shifts}
         surrenderShift={surrenderShift}

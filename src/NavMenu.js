@@ -9,6 +9,7 @@ const NavMenu = ({
   _useSelector = useSelector,
 }) => {
   const me = _useSelector((state) => state.account.username);
+  const isAdmin = _useSelector((state) => state.account.isAdmin);
   const isLoggedIn = _useSelector((state) => state.account.isLoggedIn);
   const dispatch = _useDispatch();
 
@@ -45,12 +46,16 @@ const NavMenu = ({
               <Nav className="me-auto">
                 <Nav.Link onClick={() => handleNav("")}>Home</Nav.Link>
                 <Nav.Link onClick={() => handleNav("shifts")}>Shifts</Nav.Link>
-                <Nav.Link onClick={() => handleNav("employees")}>
-                  Employees
-                </Nav.Link>
-                <Nav.Link onClick={() => handleNav("recurrings")}>
-                  Recurrings
-                </Nav.Link>
+                {isAdmin && (
+                  <>
+                    <Nav.Link onClick={() => handleNav("employees")}>
+                      Employees
+                    </Nav.Link>
+                    <Nav.Link onClick={() => handleNav("recurrings")}>
+                      Recurrings
+                    </Nav.Link>
+                  </>
+                )}
                 <Nav.Link onClick={() => handleNav("timeOff")}>
                   TimeOff
                 </Nav.Link>
