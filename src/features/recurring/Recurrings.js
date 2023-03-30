@@ -9,10 +9,10 @@ const Recurrings = ({
   _useSelector = useSelector,
   _fetch = fetch,
 }) => {
-  const [weekday, setDate] = useState(0);
+  const [weekday, setDay] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
-  const [profile, setProfile] = useState("Employee");
+  const [profile, setProfile] = useState("None");
   const [recurrings, setRecurrings] = useState([]);
 
   const employees = _useSelector((state) => state.employees.employees);
@@ -54,7 +54,7 @@ const Recurrings = ({
         startTime,
         endTime,
         weekday,
-        profile: profile === "Employee" ? null : { id: profile },
+        profile: profile === "None" ? null : { id: profile },
       }),
       headers: {
         "Content-Type": "application/json",
@@ -86,19 +86,29 @@ const Recurrings = ({
             <Form onSubmit={handleSubmit}>
               <Form.Group className="mb-3" controlId="formBasicDate">
                 <Form.Label>Date</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={weekday}
-                  onChange={(e) => setDate(e.target.value)}
-                />
+                <Form.Select
+                  aria-label="select day"
+                  onChange={(e) => setDay(e.target.value)}
+                >
+                  <option value={0}>Sunday</option>
+                  <option value={1}>Monday</option>
+                  <option value={2}>Tuesday</option>
+                  <option value={3}>Wednesday</option>
+                  <option value={4}>Thursday</option>
+                  <option value={5}>Friday</option>
+                  <option value={6}>Saturday</option>
+                </Form.Select>
               </Form.Group>
-              <Form.Select
-                aria-label="select employee"
-                onChange={(e) => setProfile(e.target.value)}
-              >
-                <option>Employee</option>
-                {renderedProfiles}
-              </Form.Select>
+              <Form.Group className="mb-3" controlId="formBasicDate">
+                <Form.Label>Employee</Form.Label>
+                <Form.Select
+                  aria-label="select employee"
+                  onChange={(e) => setProfile(e.target.value)}
+                >
+                  <option>None</option>
+                  {renderedProfiles}
+                </Form.Select>
+              </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicNumber">
                 <Form.Label>Start Time</Form.Label>
                 <Form.Control
