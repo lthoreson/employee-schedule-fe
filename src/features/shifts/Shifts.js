@@ -13,7 +13,7 @@ const Shifts = ({
   const [date, setDate] = useState(today);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState("Employee");
   const [shifts, setShifts] = useState([]);
 
   const employees = _useSelector((state) => state.employees.employees);
@@ -85,6 +85,38 @@ const Shifts = ({
     fetchShifts();
   };
 
+  const generateWeek = async () => {
+    const token = localStorage.getItem("shiftToken");
+    const shiftsResponse = await _fetch(
+      `http://localhost:8080/shift/generate?dateParam=${date}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    const newShifts = await shiftsResponse.json();
+    setShifts(newShifts);
+  };
+
+  const assignAllWeek = async () => {
+    const token = localStorage.getItem("shiftToken");
+    const shiftsResponse = await _fetch(
+      `http://localhost:8080/shift/assign?dateParam=${date}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+      }
+    );
+    const newShifts = await shiftsResponse.json();
+    setShifts(newShifts);
+  };
+
   return (
     <>
       <Accordion>
@@ -130,7 +162,12 @@ const Shifts = ({
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-
+      <Button variant="primary" onClick={generateWeek}>
+        Generate
+      </Button>{" "}
+      <Button variant="secondary" onClick={assignAllWeek}>
+        Assign
+      </Button>{" "}
       <ShiftsTable
         shifts={shifts}
         surrenderShift={surrenderShift}

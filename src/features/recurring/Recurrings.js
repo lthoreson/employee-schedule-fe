@@ -12,7 +12,7 @@ const Recurrings = ({
   const [weekday, setDate] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState("Employee");
   const [recurrings, setRecurrings] = useState([]);
 
   const employees = _useSelector((state) => state.employees.employees);

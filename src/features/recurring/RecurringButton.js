@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-const RecurringButton = ({ shift, deleteRecurring, claimShift }) => {
+const RecurringButton = ({ shift, deleteRecurring }) => {
   const handleClick = () => {
     deleteRecurring(shift);
   };

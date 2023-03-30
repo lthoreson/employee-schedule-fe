@@ -20,11 +20,7 @@ const ShiftsTable = ({ recurrings, deleteRecurring, claimShift }) => {
         {weekdays.map((w, i) => (
           <td key={i}>
             {w && (
-              <RecurringButton
-                shift={w}
-                deleteRecurring={deleteRecurring}
-                claimShift={claimShift}
-              />
+              <RecurringButton shift={w} deleteRecurring={deleteRecurring} />
             )}
           </td>
         ))}
