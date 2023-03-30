@@ -1,15 +1,15 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import { store } from './app/store';
-import App from './App';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+import App from "./App";
 
-test('renders learn react link', () => {
-  const { getByText } = render(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
+it("should render two components", () => {
+  const mockNav = () => <div>expected nav text</div>;
+  const mockUiRoutes = () => <div>expected routes text</div>;
 
-  expect(getByText(/learn/i)).toBeInTheDocument();
+  render(<App _NavMenu={mockNav} _UiRoutes={mockUiRoutes} />);
+
+  expect(screen.getByText("expected nav text")).toBeInTheDocument();
+  expect(screen.getByText("expected routes text")).toBeInTheDocument();
 });

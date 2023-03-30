@@ -8,14 +8,13 @@ const initialState = {
   message: "",
 };
 
-// test by mocking fetch and localstorage
-export const tryLoginThunkFunc = async (credentials = {}, api) => {
-  const _fetch = api._fetch || fetch;
+export const credentialsFetch = async (credentials, api) => {
+  const _fetch = api._fetch || fetch; // testing
   const _localStorage = api._localStorage || localStorage;
-  let token = _localStorage.getItem("shiftToken");
-
-  // get new token if credentials provided
-  if (credentials.username && credentials.password) {
+  const _tryToken = api._tryToken || tryToken;
+  let token;
+  // obtain token or reject with error
+  try {
     const authResponse = await _fetch(
       `http://localhost:8080/account/${credentials.path}`,
       {
@@ -27,31 +26,34 @@ export const tryLoginThunkFunc = async (credentials = {}, api) => {
       }
     );
     token = await authResponse.json();
-    // check for errors in response before moving on
-    if (token.error) {
-      return token;
-    }
-
-    _localStorage.setItem("shiftToken", token);
+  } catch (err) {
+    return api.rejectWithValue("connection failed");
   }
-
-  // get account info if token exists
-  if (token) {
-    const authResponse = await _fetch(`http://localhost:8080/account`, {
-      method: "GET",
-      headers: { Authorization: token },
-    });
-    return await authResponse.json();
-  }
-
-  // do nothing if there is no token
-  return {};
+  // save cookie and log in with the token
+  _localStorage.setItem("shiftToken", token);
+  return api.dispatch(_tryToken());
 };
 
-export const tryLogin = createAsyncThunk(
-  "account/fetchAccount",
-  tryLoginThunkFunc
+export const credentials = createAsyncThunk(
+  "account/credentials",
+  credentialsFetch
 );
+
+export const tryTokenFetch = async (_, api) => {
+  const _fetch = api._fetch || fetch;
+  const _localStorage = api._localStorage || localStorage;
+  let token = _localStorage.getItem("shiftToken");
+  if (!token) {
+    return {}; // no token is fine, default to welcome page
+  }
+  const authResponse = await _fetch(`http://localhost:8080/account`, {
+    method: "GET",
+    headers: { Authorization: token },
+  });
+  return await authResponse.json(); // account info or error message
+};
+
+export const tryToken = createAsyncThunk("account/tryToken", tryTokenFetch);
 
 // test by passing in action creators from tryLogin
 const accountSlice = createSlice({
@@ -65,24 +67,31 @@ const accountSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(tryLogin.pending, (state) => {
+      .addCase(tryToken.pending, (state) => {
         state.isLoading = true;
         state.message = "";
       })
-      .addCase(tryLogin.fulfilled, (state, action) => {
+      .addCase(tryToken.fulfilled, (state, action) => {
         state.isLoading = false;
         if (action.payload.username) {
           state.username = action.payload.username;
           state.isAdmin = action.payload.admin;
           state.isLoggedIn = true;
-        }
-        if (action.payload.message) {
+        } else if (action.payload.message) {
           state.message = action.payload.message;
         }
       })
-      .addCase(tryLogin.rejected, (state, action) => {
+      .addCase(tryToken.rejected, (state, action) => {
         state.isLoading = false;
-        state.message = action.payload.message;
+        state.message = "connection failed";
+      })
+      .addCase(credentials.pending, (state) => {
+        state.isLoading = true;
+        state.message = "";
+      })
+      .addCase(credentials.rejected, (state, action) => {
+        state.isLoading = false;
+        state.message = "connection failed";
       });
   },
 });

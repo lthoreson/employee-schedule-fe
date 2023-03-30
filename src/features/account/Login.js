@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { tryLogin } from "./accountSlice";
+import { credentials, tryToken } from "./accountSlice";
 import { navigate } from "../ui_routes/uiSlice";
 
 const Login = ({ _useDispatch = useDispatch, _useSelector = useSelector }) => {
@@ -15,7 +15,7 @@ const Login = ({ _useDispatch = useDispatch, _useSelector = useSelector }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      tryLogin({ username: username, password: password, path: "login" })
+      credentials({ username: username, password: password, path: "login" })
     );
   };
 

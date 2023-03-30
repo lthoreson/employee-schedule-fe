@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Container, Navbar, Nav } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut, tryLogin } from "./features/account/accountSlice";
+import { logOut, tryToken } from "./features/account/accountSlice";
 import { navigate } from "./features/ui_routes/uiSlice";
 
 const NavMenu = ({
@@ -24,7 +24,7 @@ const NavMenu = ({
   };
 
   useEffect(() => {
-    dispatch(tryLogin());
+    dispatch(tryToken());
   }, [dispatch]);
 
   return (
