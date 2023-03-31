@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 
-const Profile = () => {
+const Profile = ({ _fetch = fetch }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const token = localStorage.getItem("shiftToken");
 
   const fetchMyProfile = useCallback(async () => {
-    const profileResponse = await fetch("http://localhost:8080/account", {
+    const profileResponse = await _fetch("http://localhost:8080/account", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const profileResponse = await fetch(
+    const profileResponse = await _fetch(
       "http://localhost:8080/account/profile",
       {
         method: "POST",
@@ -50,7 +50,9 @@ const Profile = () => {
           type="text"
           placeholder="First Name"
           value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
+          onChange={(e) => {
+            setFirstName(e.target.value);
+          }}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="formBasicPassword">

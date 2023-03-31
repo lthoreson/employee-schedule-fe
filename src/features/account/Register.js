@@ -7,6 +7,7 @@ import { navigate } from "../ui_routes/uiSlice";
 const Register = ({
   _useDispatch = useDispatch,
   _useSelector = useSelector,
+  _credentials = credentials,
 }) => {
   const dispatch = _useDispatch();
   const message = _useSelector((state) => state.account.message);
@@ -15,11 +16,10 @@ const Register = ({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [admin, setAdmin] = useState(false);
-  console.log(admin);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(credentials({ username, password, admin, path: "register" }));
+    dispatch(_credentials({ username, password, admin, path: "register" }));
   };
 
   useEffect(() => {
