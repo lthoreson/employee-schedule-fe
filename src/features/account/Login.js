@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { credentials, tryToken } from "./accountSlice";
+import { credentials } from "./accountSlice";
 import { navigate } from "../ui_routes/uiSlice";
 
-const Login = ({ _useDispatch = useDispatch, _useSelector = useSelector }) => {
+const Login = ({
+  _useDispatch = useDispatch,
+  _useSelector = useSelector,
+  _credentials = credentials,
+}) => {
   const dispatch = _useDispatch();
   const message = _useSelector((state) => state.account.message);
   const isLoggedIn = _useSelector((state) => state.account.isLoggedIn);
@@ -15,7 +19,7 @@ const Login = ({ _useDispatch = useDispatch, _useSelector = useSelector }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      credentials({ username: username, password: password, path: "login" })
+      _credentials({ username: username, password: password, path: "login" })
     );
   };
 

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, Form } from "react-bootstrap";
 
 const Profile = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const token = localStorage.getItem("shiftToken");
 
-  const fetchMyProfile = async () => {
+  const fetchMyProfile = useCallback(async () => {
     const profileResponse = await fetch("http://localhost:8080/account", {
       method: "GET",
       headers: {
@@ -17,11 +17,11 @@ const Profile = () => {
     const profileJson = await profileResponse.json();
     setFirstName(profileJson.firstName);
     setLastName(profileJson.lastName);
-  };
+  }, []);
 
   useEffect(() => {
     fetchMyProfile();
-  }, []);
+  }, [fetchMyProfile]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
