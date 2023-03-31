@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Accordion, Button, Card, Form } from "react-bootstrap";
+import React, { useCallback, useEffect, useState } from "react";
+import { Accordion, Button, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import TimeOffCard from "./TimeOffCard";
 
@@ -11,20 +11,20 @@ const TimeOff = ({ _fetch = fetch, _useSelector = useSelector }) => {
 
   const isAdmin = _useSelector((state) => state.account.isAdmin);
 
-  const fetchTimeOff = async () => {
+  const fetchTimeOff = useCallback(async () => {
     const timeOffResponse = await _fetch(`http://localhost:8080/timeOff`);
     const newTimeOff = await timeOffResponse.json();
     setTimeOff(newTimeOff);
-  };
+  }, [_fetch]);
 
   useEffect(() => {
     fetchTimeOff();
-  }, []);
+  }, [fetchTimeOff]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("shiftToken");
-    const newTimeOff = await _fetch("http://localhost:8080/timeOff", {
+    await _fetch("http://localhost:8080/timeOff", {
       method: "POST",
       body: JSON.stringify({
         startDate,
@@ -40,7 +40,7 @@ const TimeOff = ({ _fetch = fetch, _useSelector = useSelector }) => {
 
   const approveDeny = async (timeOffRequest, isApproved) => {
     const token = localStorage.getItem("shiftToken");
-    const newTimeOff = await _fetch("http://localhost:8080/timeOff", {
+    await _fetch("http://localhost:8080/timeOff", {
       method: "PUT",
       body: JSON.stringify({
         ...timeOffRequest,

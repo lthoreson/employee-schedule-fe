@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { credentials, tryToken } from "./accountSlice";
+import { credentials } from "./accountSlice";
 import { navigate } from "../ui_routes/uiSlice";
 
 const Register = ({

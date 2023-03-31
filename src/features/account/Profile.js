@@ -4,9 +4,9 @@ import { Button, Form } from "react-bootstrap";
 const Profile = ({ _fetch = fetch }) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const token = localStorage.getItem("shiftToken");
 
   const fetchMyProfile = useCallback(async () => {
+    const token = localStorage.getItem("shiftToken");
     const profileResponse = await _fetch("http://localhost:8080/account", {
       method: "GET",
       headers: {
@@ -17,13 +17,14 @@ const Profile = ({ _fetch = fetch }) => {
     const profileJson = await profileResponse.json();
     setFirstName(profileJson.firstName);
     setLastName(profileJson.lastName);
-  }, []);
+  }, [_fetch]);
 
   useEffect(() => {
     fetchMyProfile();
   }, [fetchMyProfile]);
 
   const handleSubmit = async (e) => {
+    const token = localStorage.getItem("shiftToken");
     e.preventDefault();
     const profileResponse = await _fetch(
       "http://localhost:8080/account/profile",

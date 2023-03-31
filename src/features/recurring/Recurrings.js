@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Accordion, Button, Form, Table } from "react-bootstrap";
+import React, { useCallback, useEffect, useState } from "react";
+import { Accordion, Button, Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfiles } from "../employees/employeeSlice";
 import RecurringTable from "./RecurringTable";
@@ -28,7 +28,7 @@ const Recurrings = ({
     </option>
   ));
 
-  const fetchRecurrings = async () => {
+  const fetchRecurrings = useCallback(async () => {
     const token = localStorage.getItem("shiftToken");
     const recurringsResponse = await _fetch(`http://localhost:8080/recurring`, {
       method: "GET",
@@ -39,16 +39,16 @@ const Recurrings = ({
     });
     const newRecurrings = await recurringsResponse.json();
     setRecurrings(newRecurrings);
-  };
+  }, [_fetch]);
 
   useEffect(() => {
     fetchRecurrings();
-  }, []);
+  }, [fetchRecurrings]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("shiftToken");
-    const newShift = await _fetch("http://localhost:8080/recurring", {
+    await _fetch("http://localhost:8080/recurring", {
       method: "POST",
       body: JSON.stringify({
         startTime,
@@ -66,7 +66,7 @@ const Recurrings = ({
 
   const deleteRecurring = async (recurring) => {
     const token = localStorage.getItem("shiftToken");
-    const newShift = await _fetch("http://localhost:8080/recurring", {
+    await _fetch("http://localhost:8080/recurring", {
       method: "DELETE",
       body: JSON.stringify(recurring),
       headers: {

@@ -1,7 +1,6 @@
 import React from "react";
-import { Button, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 import RecurringButton from "./RecurringButton";
-import ShiftButton from "./RecurringButton";
 
 const ShiftsTable = ({ recurrings, deleteRecurring, claimShift }) => {
   const renderedRows = recurrings.map((employee) => {

@@ -28,7 +28,7 @@ it("should fetch profile upon render", async () => {
   expect(mockFetch).toHaveBeenCalled();
 });
 
-it("should fetch profile upon submit", async () => {
+it("should fetch profile upon submit and init", async () => {
   const mockFetch = jest.fn((path, options) => {
     return Promise.resolve({
       json: () => Promise.resolve({ firstName: "f name", lastName: "l name" }),

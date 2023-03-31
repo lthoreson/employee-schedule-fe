@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Container, Navbar, Nav, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfiles } from "./employeeSlice";
 
@@ -8,7 +8,6 @@ const Employees = ({
   _useSelector = useSelector,
 }) => {
   const employees = _useSelector((state) => state.employees.employees);
-  const isLoading = _useSelector((state) => state.employees.isLoading);
   const dispatch = _useDispatch();
 
   useEffect(() => {
