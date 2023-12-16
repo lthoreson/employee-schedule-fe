@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/employee-schedule-fe/static/css/main.64f400ec.css",
+    "main.js": "/employee-schedule-fe/static/js/main.40a4c0e8.js",
+    "static/js/787.6dd2a619.chunk.js": "/employee-schedule-fe/static/js/787.6dd2a619.chunk.js",
+    "index.html": "/employee-schedule-fe/index.html",
+    "main.64f400ec.css.map": "/employee-schedule-fe/static/css/main.64f400ec.css.map",
+    "main.40a4c0e8.js.map": "/employee-schedule-fe/static/js/main.40a4c0e8.js.map",
+    "787.6dd2a619.chunk.js.map": "/employee-schedule-fe/static/js/787.6dd2a619.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.64f400ec.css",
+    "static/js/main.40a4c0e8.js"
+  ]
+}
